@@ -25,8 +25,8 @@ namespace UnityGLTF.Plugins
         {
             Debug.Log($"{nameof(OnAfterImportNode)} {nodeObject}", nodeObject);
 
-            if (!node.Extensions.ContainsKey(MONA_BrainsFactory.EXTENSION_NAME))
-                return;
+            if (node.Extensions == null) return;
+            if (!node.Extensions.ContainsKey(MONA_BrainsFactory.EXTENSION_NAME)) return;
 
             var extension = (MONA_Brains)node.Extensions[MONA_BrainsFactory.EXTENSION_NAME];
 
@@ -49,12 +49,22 @@ namespace UnityGLTF.Plugins
 
                     if (!AssetDatabase.IsValidFolder("Assets/Brains/Imported"))
                         AssetDatabase.CreateFolder("Assets/Brains", "Imported");
-
-                        var name = graph.Name;
-                        if (string.IsNullOrEmpty(name))
-                            name = graph.name;
-
-                        AssetDatabase.CreateAsset(graph, "Assets/Brains/Imported/" + nodeObject.name + "_" + name + ".asset");
+                    
+                    var name = graph.Name;
+                    if (string.IsNullOrEmpty(name))
+                        name = graph.name;
+                    /*
+                    string[] guids = AssetDatabase.FindAssets("t:MonaBrainGraph", null);
+                    var count = 0;
+                    foreach (string guid in guids)
+                    {
+                        var path = AssetDatabase.GUIDToAssetPath(guid);
+                        if (path.IndexOf("Assets/Brains/Imported/" + nodeObject.name + "_" + name) == 0)
+                            count++;
+                    }
+                    var suffix = count > 0 ? count.ToString("000") : "";
+                    */
+                    AssetDatabase.CreateAsset(graph, "Assets/Brains/Imported/" + nodeObject.name + "_" + name + ".asset");
 #endif
                     runner.BrainGraphs.Add(graph);
                 }
