@@ -1,11 +1,11 @@
 {
-  "name": "org.khronos.unitygltf",
-  "displayName": "UnityGLTF",
+  "name": "com.monaverse.unitygltf",
+  "displayName": "MonaUnityGLTF",
   "version": "2.10.0-rc.2",
   "unity": "2020.3",
   "description": "Import and export glTF 2.0 assets, both in the editor and at runtime.",
   "repository": {
-    "url": "https://github.com/KhronosGroup/UnityGLTF.git"
+    "url": "https://github.com/monaverse/MonaUnityGLTF.git"
   },
   "keywords": [
     "gltf",
@@ -15,12 +15,14 @@
     "import",
     "export"
   ],
-  "author": "Khronos Group",
+  "author": "Mona Gallery, Inc.",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "2.0.0",
     "com.unity.modules.imageconversion": "1.0.0",
     "com.unity.shadergraph": "10.0.0",
-    "com.unity.mathematics": "1.0.0"
+    "com.unity.mathematics": "1.0.0",
+    "com.monaverse.brainssdk": "0.5.0",
+    "com.monaverse.coresdk": "0.4.0"
   },
   "samples": [
     {
