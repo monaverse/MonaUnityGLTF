@@ -38,7 +38,8 @@ namespace GLTF.Schema
 			{ KHR_texture_basisu_Factory.EXTENSION_NAME, new KHR_texture_basisu_Factory() },
 			{ EXT_meshopt_compression_Factory.EXTENSION_NAME, new EXT_meshopt_compression_Factory() },
 			{ EXT_mesh_gpu_instancing_Factory.EXTENSION_NAME, new EXT_mesh_gpu_instancing_Factory() },
-			{ MONA_BrainsFactory.EXTENSION_NAME, new MONA_BrainsFactory() }
+			{ MONA_BrainsFactory.EXTENSION_NAME, new MONA_BrainsFactory() },
+			{ MONA_CollidersFactory.EXTENSION_NAME, new MONA_CollidersFactory() }
 		};
 
 		private static DefaultExtensionFactory _defaultExtensionFactory = new DefaultExtensionFactory();
