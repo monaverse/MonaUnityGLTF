@@ -22,6 +22,11 @@ namespace GLTF.Schema
 	public class Node : GLTFChildOfRootProperty
 	{
 		/// <summary>
+		/// Set the gameobject of this node to active/inactive.
+		/// </summary>
+		public bool IsActive;
+
+		/// <summary>
 		/// If true, extracts transform, rotation, scale values from the Matrix4x4. Otherwise uses the Transform, Rotate, Scale directly as specified by by the node.
 		/// </summary>
 		public bool UseTRS;
@@ -82,6 +87,8 @@ namespace GLTF.Schema
 		public Node(Node node, GLTFRoot gltfRoot) : base(node, gltfRoot)
 		{
 			if (node == null) return;
+
+			IsActive = node.IsActive;
 
 			UseTRS = node.UseTRS;
 
@@ -178,6 +185,9 @@ namespace GLTF.Schema
 					case "weights":
 						node.Weights = reader.ReadDoubleList();
 						break;
+					case "active":
+						node.IsActive = (bool)reader.ReadAsBoolean();
+						break;
 					default:
 						node.DefaultPropertyDeserializer(root, reader);
 						break;
@@ -272,6 +282,9 @@ namespace GLTF.Schema
 				}
 				writer.WriteEndArray();
 			}
+
+			writer.WritePropertyName("active");
+			writer.WriteValue(IsActive);
 
 			base.Serialize(writer);
 

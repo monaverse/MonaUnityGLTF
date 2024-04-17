@@ -1042,7 +1042,7 @@ namespace UnityGLTF
 
 				if (onlyMesh)
 				{
-					nodeObj.SetActive(true);
+					nodeObj.SetActive(node.IsActive);
 					return;
 				}
 				
@@ -1107,7 +1107,7 @@ namespace UnityGLTF
 					}
 				}
 				
-				nodeObj.SetActive(true);
+				nodeObj.SetActive(node.IsActive);
 			}
 						
 			var instancesTRS = await GetInstancesTRS(node);
@@ -1151,7 +1151,7 @@ namespace UnityGLTF
 					nodeObj.transform.localScale = instancesTRS[i].Item3;
 					nodeObj.name = $"Instance {i.ToString()}";
 				}
-				instanceParentNode.gameObject.SetActive(true);
+				instanceParentNode.gameObject.SetActive(node.IsActive);
 			}
 			
 			progressStatus.NodeLoaded++;

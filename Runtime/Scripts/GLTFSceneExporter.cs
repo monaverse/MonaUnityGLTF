@@ -1019,6 +1019,7 @@ namespace UnityGLTF
 			exportNodeMarker.Begin();
 			
 			var node = new Node();
+			node.IsActive = nodeTransform.gameObject.activeSelf;
 
 			if (ExportNames)
 			{
