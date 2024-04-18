@@ -248,7 +248,7 @@ namespace UnityGLTF
 
         public override void OnImportAsset(AssetImportContext ctx)
         {
-	        var settings = GLTFSettings.GetDefaultSettings();
+	        var settings = GLTFSettings.GetOrCreateSettings();
 	        
 	        // make a copy, and apply import override settings
 	        foreach (var importPlugin in _importPlugins)
@@ -405,8 +405,8 @@ namespace UnityGLTF
                 var meshFilters = new List<(GameObject gameObject, Mesh sharedMesh)>();
                 if (gltfScene)
                 {
-		            meshFilters = gltfScene.GetComponentsInChildren<MeshFilter>().Select(x => (x.gameObject, x.sharedMesh)).ToList();
-	                meshFilters.AddRange(gltfScene.GetComponentsInChildren<SkinnedMeshRenderer>().Select(x => (x.gameObject, x.sharedMesh)));
+		            meshFilters = gltfScene.GetComponentsInChildren<MeshFilter>(settings.ExportDisabledGameObjects).Select(x => (x.gameObject, x.sharedMesh)).ToList();
+	                meshFilters.AddRange(gltfScene.GetComponentsInChildren<SkinnedMeshRenderer>(settings.ExportDisabledGameObjects).Select(x => (x.gameObject, x.sharedMesh)));
                 }
 
                 var vertexBuffer = new List<Vector3>();
