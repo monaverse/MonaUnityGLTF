@@ -24,7 +24,7 @@ namespace GLTF.Schema
 		/// <summary>
 		/// Set the gameobject of this node to active/inactive.
 		/// </summary>
-		public bool IsActive;
+		public bool IsActive = true;
 
 		/// <summary>
 		/// If true, extracts transform, rotation, scale values from the Matrix4x4. Otherwise uses the Transform, Rotate, Scale directly as specified by by the node.
