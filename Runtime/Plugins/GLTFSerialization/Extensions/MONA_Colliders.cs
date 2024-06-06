@@ -12,6 +12,7 @@ namespace GLTF.Schema
     {
 		public MONAColliderType ColliderType;
 		public bool IsTrigger;
+		public bool IsConvex;
 		public Vector3 Center;
 		public Vector3 Size;
 		public float Radius;
