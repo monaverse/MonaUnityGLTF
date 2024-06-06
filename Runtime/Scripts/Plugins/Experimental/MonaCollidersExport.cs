@@ -34,6 +34,7 @@ namespace UnityGLTF.Plugins
                     if (collider is BoxCollider)
                     {
                         var mc = new MONACollider();
+                        mc.ColliderType = MONAColliderType.Box;
                         mc.IsTrigger = collider.isTrigger;
                         mc.Center = ((BoxCollider)collider).center;
                         mc.Size = ((BoxCollider)collider).size;
@@ -42,6 +43,7 @@ namespace UnityGLTF.Plugins
                     else if (collider is SphereCollider)
                     {
                         var mc = new MONACollider();
+                        mc.ColliderType = MONAColliderType.Sphere;
                         mc.IsTrigger = collider.isTrigger;
                         mc.Center = ((SphereCollider)collider).center;
                         mc.Radius = ((SphereCollider)collider).radius;
@@ -50,11 +52,20 @@ namespace UnityGLTF.Plugins
                     else if (collider is CapsuleCollider)
                     {
                         var mc = new MONACollider();
+                        mc.ColliderType = MONAColliderType.Capsule;
                         mc.IsTrigger = collider.isTrigger;
                         mc.Center = ((CapsuleCollider)collider).center;
                         mc.Radius = ((CapsuleCollider)collider).radius;
                         mc.Height = ((CapsuleCollider)collider).height;
                         mc.Direction = ((CapsuleCollider)collider).direction;
+                        ext.colliders.Add(mc);
+                    }
+                    else if (collider is MeshCollider)
+                    {
+                        var mc = new MONACollider();
+                        mc.ColliderType = MONAColliderType.Mesh;
+                        mc.IsTrigger = collider.isTrigger;
+                        mc.IsConvex = ((MeshCollider)collider).convex;
                         ext.colliders.Add(mc);
                     }
                 }

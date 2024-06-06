@@ -64,6 +64,7 @@ namespace UnityGLTF.Plugins
                         case MONAColliderType.Mesh:
                             var mesh = nodeObject.AddComponent<MeshCollider>();
                             mesh.isTrigger = collider.IsTrigger;
+                            mesh.convex = collider.IsConvex;
                             break;
                     }    
                 }
