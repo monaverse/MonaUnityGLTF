@@ -29,8 +29,6 @@ namespace UnityGLTF.Plugins
 
         public override void OnAfterImportNode(Node node, int nodeIndex, GameObject nodeObject)
         {
-            Debug.Log($"{nameof(OnAfterImportNode)} {nodeObject}", nodeObject);
-
             if (node.Extensions == null) return;
             if (!node.Extensions.ContainsKey(MONA_BrainsFactory.EXTENSION_NAME)) return;
 

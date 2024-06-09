@@ -674,9 +674,11 @@ namespace UnityGLTF
 			mesh.subMeshCount = unityMeshData.Indices.Length;
 			for (int i = 0; i < unityMeshData.Indices.Length; i++)
 			{
+				
 				mesh.SetIndices(unityMeshData.Indices[i], unityMeshData.Topology[i], i, false,
 					(int)unityMeshData.subMeshVertexOffset[i]);
 			}
+
 			mesh.RecalculateBounds();
 			await YieldOnTimeoutAndThrowOnLowMemory();
 
