@@ -425,9 +425,9 @@ namespace UnityGLTF.Timeline
 				Object.Destroy(obj);
 		}
 
-		private static ProfilerMarker processAnimationMarker = new ProfilerMarker("Process Animation");
-		private static ProfilerMarker simplifyKeyframesMarker = new ProfilerMarker("Simplify Keyframes");
-		private static ProfilerMarker convertValuesMarker = new ProfilerMarker("Convert Values to Arrays");
+		//private static ProfilerMarker processAnimationMarker = new ProfilerMarker("Process Animation");
+		//private static ProfilerMarker simplifyKeyframesMarker = new ProfilerMarker("Simplify Keyframes");
+		//private static ProfilerMarker convertValuesMarker = new ProfilerMarker("Convert Values to Arrays");
 
 		private void CollectAndProcessAnimation(GLTFSceneExporter gltfSceneExporter, GLTFAnimation anim, bool calculateTranslationBounds, out Bounds translationBounds)
 		{
@@ -436,7 +436,7 @@ namespace UnityGLTF.Timeline
 
 			foreach (var kvp in data)
 			{
-				processAnimationMarker.Begin();
+				//processAnimationMarker.Begin();
 				foreach (var tr in kvp.Value.tracks)
 				{
 					if (tr.times.Length == 0) continue;
@@ -464,7 +464,7 @@ namespace UnityGLTF.Timeline
 					gltfSceneExporter.RemoveUnneededKeyframes(ref postAnimation.Times, ref postAnimation.Values);
 					gltfSceneExporter.AddAnimationData(tr.animatedObject, tr.propertyName, anim, postAnimation.Times, postAnimation.Values);
 				}
-				processAnimationMarker.End();
+				//processAnimationMarker.End();
 			}
 		}
 

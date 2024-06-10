@@ -69,10 +69,30 @@ namespace UnityGLTF.Plugins
                 found = true;
             }
 
+            var id = transform.GetComponent<MonaBodyId>();
+            if(id != null)
+            {
+                ext.chain_id = id.ChainId;
+                ext.contract = id.Contract;
+                ext.token_id = id.TokenId;
+                ext.package_name = id.PackageName;
+                ext.version = id.Version;
+            }
+
+            var author = transform.GetComponent<MonaBodyAuthor>();
+            if(author != null)
+            {
+                ext.author = author.Author;
+                ext.author_address = author.AuthorAddress;
+                ext.license = author.License;
+            }
+
             var body = transform.GetComponent<IMonaBody>();
             if (body != null)
             {
                 ext.body = true;
+                ext.disable_on_load = body.DisableOnLoad;
+                ext.sync_type = (int)body.SyncType;
                 found = true;
             }
             else

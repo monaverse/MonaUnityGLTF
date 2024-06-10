@@ -90,6 +90,18 @@ namespace UnityGLTF.Plugins
                 }
             }
 
+            var id = nodeObject.AddComponent<MonaBodyId>();
+            id.ChainId = extension.chain_id;
+            id.Contract = extension.contract;
+            id.TokenId = extension.token_id;
+            id.PackageName = extension.package_name;
+            id.Version = extension.version;
+
+            var author = nodeObject.AddComponent<MonaBodyAuthor>();
+            author.Author = extension.author;
+            author.AuthorAddress = extension.author_address;
+            author.License = extension.license;
+
             if(!string.IsNullOrEmpty(extension.asset))
             {
                 switch(extension.asset)
