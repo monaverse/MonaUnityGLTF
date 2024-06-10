@@ -1,4 +1,5 @@
 using GLTF.Schema;
+using Mona.SDK.Core.Body;
 using Mona.SDK.Brains.Core.Brain;
 using Mona.SDK.Core.Assets.Behaviours;
 using Mona.SDK.Brains.Core.ScriptableObjects;
@@ -34,58 +35,71 @@ namespace UnityGLTF.Plugins
 
             var extension = (MONA_Brains)node.Extensions[MONA_BrainsFactory.EXTENSION_NAME];
 
-            if (extension.brains != null && extension.brains.Count > 0)
+            if (extension.brains != null)
             {
-                var runner = nodeObject.GetComponent<IMonaBrainRunner>();
-                if (runner == null)
-                    runner = (IMonaBrainRunner)nodeObject.AddComponent<MonaBrainRunner>();
-
-                for (var i = 0; i < extension.brains.Count; i++)
+                if(extension.body)
                 {
-                    var brain = extension.brains[i];
-                    if (brain.IndexOf("ipfs:") == 0 || brain.IndexOf("http:") == 0)
-                    {
-                        runner.BrainUrls.Add(brain.Replace("ipfs://", ""));
-                    }
-                    else
-                    {
-                        var json = Base64Decode(brain);
-#if UNITY_EDITOR
-                        if (!AssetDatabase.IsValidFolder("Assets/Brains"))
-                            AssetDatabase.CreateFolder("Assets", "Brains");
+                    var body = nodeObject.AddComponent<MonaBody>();
+                    body.SetDisableOnLoad(extension.disable_on_load);
+                    body.SyncType = (MonaBodyNetworkSyncType)extension.sync_type;
+                    body.SyncPositionAndRotation = extension.sync_position_and_rotation;
+                    body.Guid = extension.guid;
+                    body.DurableId = extension.durable_id;
+                }
 
-                        if (!AssetDatabase.IsValidFolder("Assets/Brains/Imported"))
-                            AssetDatabase.CreateFolder("Assets/Brains", "Imported");
-#endif
-                        MonaBrainGraph graph;
-                        if (!_graphInstances.ContainsKey(json))
+                if (extension.brains.Count > 0)
+                {
+                    var runner = nodeObject.GetComponent<IMonaBrainRunner>();
+                    if (runner == null)
+                        runner = (IMonaBrainRunner)nodeObject.AddComponent<MonaBrainRunner>();
+
+                    for (var i = 0; i < extension.brains.Count; i++)
+                    {
+                        var brain = extension.brains[i];
+                        if (brain.IndexOf("ipfs:") == 0 || brain.IndexOf("http:") == 0)
                         {
-                            graph = MonaBrainGraph.CreateFromJson(json);
-                            _graphInstances.Add(json, graph);
-
-                            var parent = nodeObject.transform;
-                            var pathBuilder = new StringBuilder();
-                            while (parent != null)
-                            {
-                                pathBuilder.Append(parent.name + "_");
-                                parent = parent.parent;
-                            }
-                            var path = pathBuilder.ToString();
-
-                            var name = graph.Name;
-                            if (string.IsNullOrEmpty(name))
-                                name = graph.name;
-
-#if UNITY_EDITOR
-                            AssetDatabase.CreateAsset(graph, "Assets/Brains/Imported/" + path + name + ".asset");
-#endif
+                            runner.BrainUrls.Add(brain.Replace("ipfs://", ""));
                         }
                         else
                         {
-                            graph = _graphInstances[json];
-                        }
+                            var json = Base64Decode(brain);
+#if UNITY_EDITOR
+                            if (!AssetDatabase.IsValidFolder("Assets/Brains"))
+                                AssetDatabase.CreateFolder("Assets", "Brains");
 
-                        runner.AddBrainGraph(graph);
+                            if (!AssetDatabase.IsValidFolder("Assets/Brains/Imported"))
+                                AssetDatabase.CreateFolder("Assets/Brains", "Imported");
+#endif
+                            MonaBrainGraph graph;
+                            if (!_graphInstances.ContainsKey(json))
+                            {
+                                graph = MonaBrainGraph.CreateFromJson(json);
+                                _graphInstances.Add(json, graph);
+
+                                var parent = nodeObject.transform;
+                                var pathBuilder = new StringBuilder();
+                                while (parent != null)
+                                {
+                                    pathBuilder.Append(parent.name + "_");
+                                    parent = parent.parent;
+                                }
+                                var path = pathBuilder.ToString();
+
+                                var name = graph.Name;
+                                if (string.IsNullOrEmpty(name))
+                                    name = graph.name;
+
+#if UNITY_EDITOR
+                                AssetDatabase.CreateAsset(graph, "Assets/Brains/Imported/" + path + name + ".asset");
+#endif
+                            }
+                            else
+                            {
+                                graph = _graphInstances[json];
+                            }
+
+                            runner.AddBrainGraph(graph);
+                        }
                     }
                 }
             }

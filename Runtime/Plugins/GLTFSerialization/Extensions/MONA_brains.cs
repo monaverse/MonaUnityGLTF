@@ -12,6 +12,9 @@ namespace GLTF.Schema
 		public bool body;
 		public int sync_type;
 		public bool disable_on_load;
+		public bool sync_position_and_rotation;
+		public string guid;
+		public string durable_id;
 
 		public string chain_id;
 		public string token_id;
@@ -39,6 +42,9 @@ namespace GLTF.Schema
 			jobj.Add(new JProperty("body", body));
 			jobj.Add(new JProperty("sync_type", sync_type));
 			jobj.Add(new JProperty("disable_on_load", disable_on_load));
+			jobj.Add(new JProperty("sync_position_and_rotation", sync_position_and_rotation));
+			jobj.Add(new JProperty("durable_id", durable_id));
+			jobj.Add(new JProperty("guid", guid));
 
 			jobj.Add(new JProperty("chain_id", chain_id));
 			jobj.Add(new JProperty("token_id", token_id));
@@ -62,6 +68,9 @@ namespace GLTF.Schema
 				body = body,
 				sync_type = sync_type,
 				disable_on_load = disable_on_load,
+				sync_position_and_rotation = sync_position_and_rotation,
+				guid = guid,
+				durable_id = durable_id,
 				chain_id = chain_id,
 				token_id = token_id,
 				contract = contract,
@@ -102,6 +111,9 @@ namespace GLTF.Schema
 
 				var sync_type = extensionToken.Value[nameof(MONA_Brains.sync_type)] != null ? int.Parse(extensionToken.Value[nameof(MONA_Brains.sync_type)].ToString()) : 0;
 				var disable_on_load = extensionToken.Value[nameof(MONA_Brains.disable_on_load)] != null ? bool.Parse(extensionToken.Value[nameof(MONA_Brains.disable_on_load)].ToString()) : false;
+				var sync_position_and_rotation = extensionToken.Value[nameof(MONA_Brains.sync_position_and_rotation)] != null ? bool.Parse(extensionToken.Value[nameof(MONA_Brains.sync_position_and_rotation)].ToString()) : false;
+				var guid = extensionToken.Value[nameof(MONA_Brains.guid)] != null ? extensionToken.Value[nameof(MONA_Brains.guid)].ToString() : "";
+				var durable_id = extensionToken.Value[nameof(MONA_Brains.durable_id)] != null ? extensionToken.Value[nameof(MONA_Brains.durable_id)].ToString() : "";
 
 				var chain_id = extensionToken.Value[nameof(MONA_Brains.chain_id)] != null ? extensionToken.Value[nameof(MONA_Brains.chain_id)].ToString() : "";
 				var contract = extensionToken.Value[nameof(MONA_Brains.contract)] != null ? extensionToken.Value[nameof(MONA_Brains.contract)].ToString() : "";
@@ -123,6 +135,9 @@ namespace GLTF.Schema
 				extension.body = body;
 				extension.sync_type = sync_type;
 				extension.disable_on_load = disable_on_load;
+				extension.sync_position_and_rotation = sync_position_and_rotation;
+				extension.durable_id = durable_id;
+				extension.guid = guid;
 
 				extension.chain_id = chain_id;
 				extension.contract = contract;
