@@ -43,8 +43,10 @@ namespace UnityGLTF.Plugins
                     body.SetDisableOnLoad(extension.disable_on_load);
                     body.SyncType = (MonaBodyNetworkSyncType)extension.sync_type;
                     body.SyncPositionAndRotation = extension.sync_position_and_rotation;
-                    body.Guid = extension.guid;
-                    body.DurableId = extension.durable_id;
+                    if(!string.IsNullOrEmpty(extension.guid))
+                        body.Guid = extension.guid;
+                    if(!string.IsNullOrEmpty(extension.durable_id))
+                        body.DurableId = extension.durable_id;
                 }
 
                 if (extension.brains.Count > 0)
