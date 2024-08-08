@@ -25,27 +25,37 @@ namespace UnityGLTF.Plugins
 
     public class MonaBrainsImportContext : GLTFImportPluginContext
     {
+        private struct NodeWithBrains
+        {
+            public MONA_Brains Extension;
+            public GameObject NodeObject;
+        }
 
         private Dictionary<string, MonaBrainGraph> _graphInstances = new Dictionary<string, MonaBrainGraph>();
+        private List<NodeWithBrains> _nodesWithBrains = new List<NodeWithBrains>();
 
-        public override void OnAfterImportNode(Node node, int nodeIndex, GameObject nodeObject)
+        public override void OnAfterImportScene(GLTFScene scene, int sceneIndex, GameObject sceneObject)
         {
-            if (node.Extensions == null) return;
-            if (!node.Extensions.ContainsKey(MONA_BrainsFactory.EXTENSION_NAME)) return;
+            base.OnAfterImportScene(scene, sceneIndex, sceneObject);
+            StartNodesWithBrains();
+        }
 
-            var extension = (MONA_Brains)node.Extensions[MONA_BrainsFactory.EXTENSION_NAME];
-
-            if (extension.brains != null)
+        private void StartNodesWithBrains()
+        {
+            for (var e = 0; e < _nodesWithBrains.Count; e++)
             {
-                if(extension.body)
+                var extension = _nodesWithBrains[e].Extension;
+                var nodeObject = _nodesWithBrains[e].NodeObject;
+
+                if (extension.body)
                 {
                     var body = nodeObject.AddComponent<MonaBody>();
                     body.SetDisableOnLoad(extension.disable_on_load);
                     body.SyncType = (MonaBodyNetworkSyncType)extension.sync_type;
                     body.SyncPositionAndRotation = extension.sync_position_and_rotation;
-                    if(!string.IsNullOrEmpty(extension.guid))
+                    if (!string.IsNullOrEmpty(extension.guid))
                         body.Guid = extension.guid;
-                    if(!string.IsNullOrEmpty(extension.durable_id))
+                    if (!string.IsNullOrEmpty(extension.durable_id))
                         body.DurableId = extension.durable_id;
                 }
 
@@ -105,6 +115,19 @@ namespace UnityGLTF.Plugins
                     }
                 }
             }
+            _nodesWithBrains.Clear();
+        }
+
+
+        public override void OnAfterImportNode(Node node, int nodeIndex, GameObject nodeObject)
+        {
+            if (node.Extensions == null) return;
+            if (!node.Extensions.ContainsKey(MONA_BrainsFactory.EXTENSION_NAME)) return;
+
+            var extension = (MONA_Brains)node.Extensions[MONA_BrainsFactory.EXTENSION_NAME];
+
+            if (extension.brains != null)
+                _nodesWithBrains.Add(new NodeWithBrains() { Extension = extension, NodeObject = nodeObject });
 
             var id = nodeObject.AddComponent<MonaBodyId>();
             id.ChainId = extension.chain_id;
