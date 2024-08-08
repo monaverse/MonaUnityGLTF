@@ -87,13 +87,13 @@ namespace UnityGLTF.Plugins
                 ext.license = author.License;
             }
 
-            var body = transform.GetComponent<MonaBody>();
+            var body = MonaBodyFactory.Create(transform);
             if (body != null)
             {
                 ext.body = true;
                 ext.disable_on_load = body.DisableOnLoad;
                 ext.sync_type = (int)body.SyncType;
-                ext.sync_position_and_rotation = body.SyncPositionAndRotation;
+                ext.sync_position_and_rotation = body.GetSyncPositionAndRotation();
                 ext.guid = body.Guid;
                 ext.durable_id = body.DurableId;
 

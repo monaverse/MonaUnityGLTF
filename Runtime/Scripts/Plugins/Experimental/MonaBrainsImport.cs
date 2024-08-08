@@ -39,10 +39,10 @@ namespace UnityGLTF.Plugins
             {
                 if(extension.body)
                 {
-                    var body = nodeObject.AddComponent<MonaBody>();
+                    var body = MonaBodyFactory.Create(nodeObject);
                     body.SetDisableOnLoad(extension.disable_on_load);
                     body.SyncType = (MonaBodyNetworkSyncType)extension.sync_type;
-                    body.SyncPositionAndRotation = extension.sync_position_and_rotation;
+                    body.SetSyncPositionAndRotation(extension.sync_position_and_rotation);
                     if(!string.IsNullOrEmpty(extension.guid))
                         body.Guid = extension.guid;
                     if(!string.IsNullOrEmpty(extension.durable_id))
