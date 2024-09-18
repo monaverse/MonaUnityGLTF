@@ -1,7 +1,7 @@
   {
   "name": "com.monaverse.unitygltf",
   "displayName": "MonaUnityGLTF",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "unity": "2020.3",
   "description": "Import and export glTF 2.0 assets, both in the editor and at runtime.",
   "repository": {
@@ -21,8 +21,8 @@
     "com.unity.modules.imageconversion": "1.0.0",
     "com.unity.shadergraph": "10.0.0",
     "com.unity.mathematics": "1.0.0",
-    "com.monaverse.brainssdk": "0.19.0",
-    "com.monaverse.coresdk": "0.13.0"
+    "com.monaverse.brainssdk": "0.20.0",
+    "com.monaverse.coresdk": "0.14.0"
   },
   "samples": [
     {
